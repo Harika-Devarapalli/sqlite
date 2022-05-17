@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText name,contact,dob;
-    Button insert,delete,view,update;
+    Button insert,delete,view,update,search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,30 @@ public class MainActivity extends AppCompatActivity {
         contact=findViewById(R.id.contact);
         dob=findViewById(R.id.dob);
         update=findViewById(R.id.bt1update);
-        insert=findViewById(R.id.bt4insert);
         delete=findViewById(R.id.bt2delete);
         view=findViewById(R.id.bt3view);
+        insert=findViewById(R.id.bt4insert);
+        search = findViewById(R.id.bt5search);
         DB=new DBHelper(this);
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String na=name.getText().toString();
+                String con=contact.getText().toString();
+                String db1=dob.getText().toString();
+                Boolean checkdelete=DB.searchdata(na,con,db1);
+                if(checkdelete==true)
+                {
+                    Toast.makeText(getApplicationContext(),"search found",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"search not found",Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             else
             {
                 Toast.makeText(getApplicationContext(),"insert not data",Toast.LENGTH_LONG).show();
+
             }
 
         }
